@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+{% block title %}Dashboard{% endblock %}
+{% block content %}
+<h1>Welcome, {{ current_user.name }}</h1>
+<p class="muted">Your peer-learning control center.</p>
+
+<div class="grid two">
+    <div class="card">
+        <h3>Skills you teach</h3>
+        {% for s in offered %}
+            <span class="tag">{{ s.name }}</span>
+        {% else %}
+            <p>No teaching skills yet.</p>
+        {% endfor %}
+    </div>
+    <div class="card">
+        <h3>Skills you want to learn</h3>
+        {% for s in wanted %}
+            <span class="tag">{{ s.name }}</span>
+        {% else %}
+            <p>No learning goals yet.</p>
+        {% endfor %}
+    </div>
+</div>
+
+<div class="card">
+    <h2>Pending Requests</h2>
+    {% for r in pending %}
+        <div class="list-row">
+            <div><strong>{{ r.other_name }}</strong> — {{ r.skill_name }}<br><small>{{ r.scheduled_at }}</small></div>
+            <span class="status pending">{{ r.status }}</span>
+        </div>
+    {% else %}
+        <p>No pending requests.</p>
+    {% endfor %}
+</div>
+
+<a class="btn" href="{{ url_for('matches') }}">Find Peer Matches →</a>
+{% endblock %}

@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+{% block title %}Matches{% endblock %}
+{% block content %}
+<h1>Recommended Peer Matches</h1>
+<p class="muted">Matches are ranked by complementary skills.</p>
+
+{% for m in matches %}
+<div class="card match-card">
+    <div class="match-top">
+        <div>
+            <h2>{{ m.user.name }}</h2>
+            <p>{{ m.user.bio }}</p>
+        </div>
+        <div class="score">{{ m.score }} match points</div>
+    </div>
+
+    {% if m.teach_me %}
+        <p><strong>They can teach you:</strong>
+        {% for skill in m.teach_me %}<span class="tag">{{ skill }}</span>{% endfor %}</p>
+    {% endif %}
+
+    {% if m.learn_from_me %}
+        <p><strong>You can teach them:</strong>
+        {% for skill in m.learn_from_me %}<span class="tag">{{ skill }}</span>{% endfor %}</p>
+    {% endif %}
+
+    <h4>Skills they offer</h4>
+    {% for s in m.offers %}
+        <a class="skill-link" href="{{ url_for('request_session', teacher_id=m.user.id, skill_id=s.id) }}">{{ s.name }} → Request</a>
+    {% endfor %}
+</div>
+{% else %}
+<div class="card"><h2>No matches yet.</h2><p>Add both teaching and learning skills to your profile.</p></div>
+{% endfor %}
+{% endblock %}

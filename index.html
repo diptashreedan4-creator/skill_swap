@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% block title %}SkillSwap — Peer Learning{% endblock %}
+{% block content %}
+<section class="hero">
+    <div>
+        <span class="eyebrow">PEER LEARNING PLATFORM</span>
+        <h1>Learn what you need.<br><span>Teach what you know.</span></h1>
+        <p>SkillSwap connects students who can teach each other. Build skills through real peer-to-peer learning.</p>
+        <div class="actions">
+            {% if current_user %}
+                <a class="btn" href="{{ url_for('matches') }}">Find Matches</a>
+                <a class="btn secondary" href="{{ url_for('profile') }}">Build Profile</a>
+            {% else %}
+                <a class="btn" href="{{ url_for('register') }}">Get Started</a>
+                <a class="btn secondary" href="{{ url_for('login') }}">Login</a>
+            {% endif %}
+        </div>
+    </div>
+</section>
+
+<div class="grid three">
+    <div class="card"><h3>🎯 Smart Matching</h3><p>Find students whose skills complement what you want to learn.</p></div>
+    <div class="card"><h3>📅 Session Requests</h3><p>Request, schedule and manage peer-learning sessions.</p></div>
+    <div class="card"><h3>⭐ Reviews</h3><p>Rate completed sessions and build a trustworthy learning community.</p></div>
+</div>
+{% endblock %}

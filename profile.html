@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{% block title %}Profile{% endblock %}
+{% block content %}
+<h1>Your Profile</h1>
+<p class="muted">Separate multiple skills with commas.</p>
+<div class="form-card">
+<form method="post">
+    <label>Name</label>
+    <input name="name" value="{{ user.name }}" required>
+
+    <label>Bio</label>
+    <textarea name="bio" rows="5" placeholder="Tell other students about yourself">{{ user.bio }}</textarea>
+
+    <label>Skills I can teach</label>
+    <input name="offered" value="{{ offered | map(attribute='name') | join(', ') }}" placeholder="Python, C, Mathematics">
+
+    <label>Skills I want to learn</label>
+    <input name="wanted" value="{{ wanted | map(attribute='name') | join(', ') }}" placeholder="Java, Web Development">
+
+    <button class="btn">Save Profile</button>
+</form>
+</div>
+{% endblock %}

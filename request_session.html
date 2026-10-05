@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% block title %}Request Session{% endblock %}
+{% block content %}
+<div class="form-card">
+<h2>Request a {{ skill.name }} session</h2>
+<p>Teacher: <strong>{{ teacher.name }}</strong></p>
+<form method="post">
+    <label>Date and time</label>
+    <input type="datetime-local" name="scheduled_at" required>
+
+    <label>Notes</label>
+    <textarea name="notes" rows="5" placeholder="What do you want to learn?"></textarea>
+
+    <button class="btn">Send Request</button>
+</form>
+</div>
+{% endblock %}

@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+{% block title %}Requests{% endblock %}
+{% block content %}
+<h1>Learning Sessions</h1>
+{% for r in requests %}
+<div class="card">
+    <div class="list-row">
+        <div>
+            <h3>{{ r.skill_name }}</h3>
+            <p>
+                Requester: {{ r.requester_name }}<br>
+                Teacher: {{ r.teacher_name }}<br>
+                Scheduled: {{ r.scheduled_at }}
+            </p>
+            {% if r.notes %}<p><strong>Notes:</strong> {{ r.notes }}</p>{% endif %}
+        </div>
+        <span class="status {{ r.status }}">{{ r.status }}</span>
+    </div>
+
+    <div class="actions">
+        {% if current_user.id == r.teacher_id and r.status == 'pending' %}
+            <form method="post" action="{{ url_for('session_action', session_id=r.id, action='accept') }}"><button class="btn small">Accept</button></form>
+            <form method="post" action="{{ url_for('session_action', session_id=r.id, action='reject') }}"><button class="btn small danger">Reject</button></form>
+        {% endif %}
+
+        {% if r.status == 'accepted' %}
+            <form method="post" action="{{ url_for('session_action', session_id=r.id, action='complete') }}"><button class="btn small">Mark Complete</button></form>
+            <form method="post" action="{{ url_for('session_action', session_id=r.id, action='cancel') }}"><button class="btn small danger">Cancel</button></form>
+        {% endif %}
+
+        {% if r.status == 'completed' %}
+            <a class="btn small secondary" href="{{ url_for('review', session_id=r.id) }}">Review</a>
+        {% endif %}
+    </div>
+</div>
+{% else %}
+<div class="card"><p>No sessions yet.</p></div>
+{% endfor %}
+{% endblock %}
