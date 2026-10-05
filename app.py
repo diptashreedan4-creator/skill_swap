@@ -402,7 +402,8 @@ def review(session_id):
 
     conn.close()
     return render_template("review.html", session=row)
- init_db()
+    
+init_db()
 
  if __name__ == "__main__":
     app.run(debug=True)
