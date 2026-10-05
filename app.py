@@ -1,11 +1,12 @@
 from flask import Flask, render_template, request, redirect, url_for, session, flash
 import sqlite3
+import os
 from functools import wraps
 from werkzeug.security import generate_password_hash, check_password_hash
 from datetime import datetime
 
 app = Flask(__name__)
-app.secret_key = "change-this-secret-key"
+app.secret_key = os.environ.get("SECRET_KEY","change-this-secret-key")
 DB = "skill_exchange.db"
 
 def get_db():
@@ -401,7 +402,7 @@ def review(session_id):
 
     conn.close()
     return render_template("review.html", session=row)
+ init_db()
 
-if __name__ == "__main__":
-    init_db()
+ if __name__ == "__main__":
     app.run(debug=True)
